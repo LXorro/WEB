@@ -29,6 +29,18 @@
         .method h3 {
             color: #007bff;
         }
+
+        .submit-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -64,5 +76,27 @@
         </div>
     </div>
 
+    <button id="generatePDF" class="submit-button">Generar PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('generatePDF').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            html2canvas(document.body).then(canvas => {
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const imgData = canvas.toDataURL('image/png');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save("metodos_de_estudio.pdf");
+            });
+        });
+    </script>
+
+
+
+    
 </body>
 </html>
