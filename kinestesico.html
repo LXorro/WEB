@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Estudio para Aprendices Kinestésicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .method {
+            margin-bottom: 20px;
+        }
+        .method h3 {
+            color: #28a745;
+        }
+        .submit-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Métodos de Estudio para Aprendices Kinestésicos</h1>
+
+    <div class="content">
+        <p>Los aprendices kinestésicos aprenden mejor a través de la experiencia física y el movimiento. Aquí tienes algunos métodos de estudio recomendados para este estilo de aprendizaje:</p>
+
+        <div class="method">
+            <h3>Aprendizaje Práctico</h3>
+            <p>Participa en actividades prácticas, experimentos y proyectos que te permitan tocar y manipular materiales. Esto te ayudará a comprender mejor los conceptos al involucrarte activamente.</p>
+        </div>
+
+        <div class="method">
+            <h3>Role-playing y Dramatizaciones</h3>
+            <p>Realiza dramatizaciones o simulaciones de situaciones para entender los conceptos. Esta técnica te permite experimentar el contenido de manera más directa y memorable.</p>
+        </div>
+
+        <div class="method">
+            <h3>Movimiento y Gestos</h3>
+            <p>Usa movimientos y gestos para memorizar y comprender la información. Por ejemplo, puedes caminar mientras estudias o utilizar gestos con las manos para recordar puntos clave.</p>
+        </div>
+
+        <div class="method">
+            <h3>Construcción y Modelado</h3>
+            <p>Construye modelos o estructuras físicas relacionadas con el contenido de estudio. Esto te ayudará a visualizar y recordar mejor la información.</p>
+        </div>
+
+        <div class="method">
+            <h3>Técnicas de Estudio Activas</h3>
+            <p>Utiliza técnicas como la enseñanza a otros, hacer demostraciones, y escribir en pizarras o tableros grandes. Estas actividades te mantienen activo y comprometido con el aprendizaje.</p>
+        </div>
+    </div>
+
+    <button id="generatePDF" class="submit-button">Generar PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('generatePDF').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            html2canvas(document.body).then(canvas => {
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const imgData = canvas.toDataURL('image/png');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save("metodos_de_estudio.pdf");
+            });
+        });
+    </script>
+
+</body>
+</html>
